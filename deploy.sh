@@ -19,7 +19,7 @@ read -p "Press Enter to continue after configuring your AWS credentials..."
 
 # Check if the user is inside the vscode-eks directory
 if [[ ! "$(basename $PWD)" == "vscode-eks" ]]; then
-    echo "If vscode-eks not present, run git clone ttps://github.com/kubernetesvillage/vscode-eks"
+    echo "If vscode-eks not present, run git clone https://github.com/kubernetesvillage/vscode-eks"
     echo "Please navigate to the vscode-eks directory before running this script."
     exit 1
 fi
@@ -121,30 +121,32 @@ echo "Using AWS region: $AWS_REGION"
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 export AWS_REGION="${AWS_REGION}"
 
-# Step 6: Replace the placeholder password in file.sh
+# Step 2: Generate a random password and save it to a file
+PASSWORD="password_$(openssl rand -hex 12)"
+echo "Generated password: $PASSWORD"
+echo $PASSWORD > terraform/vscode_password.txt
+
+# Step 3: Replace the placeholder password in file.sh
 sed -i "s|PASSWORD=.*|PASSWORD=$PASSWORD\" \\\\|" terraform/file.sh
 
-# Step 2: Initialize Terraform
+# Step 4: Initialize Terraform
 terraform -chdir=terraform/ init -lock=false
 if [ $? -ne 0 ]; then
   echo "Terraform initialization failed"
   exit 1
 fi
 
-# Step 3: Apply Terraform configuration
+# Step 5: Apply Terraform configuration
 terraform -chdir=terraform/ apply -auto-approve -lock=false
 if [ $? -ne 0 ]; then
   echo "Terraform apply failed"
   exit 1
 fi
 
-# Step 4: Save Terraform output to a file
+# Step 6: Save Terraform output to a file
 terraform -chdir=terraform/ output -json > terraform_output.json
 
-# Step 5: Generate a random password and save it to a file
-PASSWORD="password_$(openssl rand -hex 12)"
-echo "Generated password: $PASSWORD"
-echo $PASSWORD > terraform/vscode_password.txt
+
 
 
 # Show final message

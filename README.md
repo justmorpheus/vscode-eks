@@ -1,5 +1,5 @@
 
-# VSCode Deployment for Kubernetes Lab
+# VSCode Code-server Deployment for Kubernetes Lab
 
 This repository contains scripts to deploy infrastructure for a VSCode server on AWS EKS using Terraform.
 
@@ -84,6 +84,8 @@ Replace `<your-region>` with your desired AWS region. If no region is provided, 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Credits
+- Thanks to [coder team](https://github.com/coder/deploy-code-server)
+
 
 This project is maintained by the Kubernetes Village team. Contributions are welcome!
 
