@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Warning to configure AWS credentials
+echo "WARNING: Please ensure that your AWS credentials are configured before proceeding."
+echo "Run 'aws configure' to set up your AWS credentials."
+
+
 set -e
 
 kubectl_version='1.27.7'
