@@ -110,17 +110,14 @@ for command in kubectl jq envsubst aws
 # # Run the install command.
 # sudo yum install -y session-manager-plugin.rpm
 
+# Create the directory for the workshop
 mkdir -p /eks-pentest-workshop
 
+# Change the ownership of the directory to ec2-user
 chown ec2-user /eks-pentest-workshop
 
 
 # Install opencode server
-
-#!/bin/bash
-
-# Set HOME environment variable for root
-export HOME=/root
 
 # Install Docker
 sudo amazon-linux-extras install docker -y
@@ -138,13 +135,19 @@ sudo usermod -aG wheel coder
 sudo mkdir -p /home/coder/project
 
 # Run the code-server container in the background
-sudo docker run -d \
-  -p 80:8080 \
+sudo docker run -ditp 80:8080 \
   -v "/home/coder/project:/home/coder/project" \
   -u "$(id -u coder):$(id -g coder)" \
   -e "DOCKER_USER=coder" \
   -e "PASSWORD=ReplaceWithYourStrongPassword" \
   bencdr/code-server-deploy-container:latest
+
+# sudo docker run -ditp 80:8080 \
+#   -v "/home/coder/project:/home/coder/project" \
+#   -u "$(id -u coder):$(id -g coder)" \
+#   -e "DOCKER_USER=coder" \
+#   -e "PASSWORD=ReplaceWithYourStrongPassword" \
+#   bencdr/code-server-deploy-container:latest
 
 # Print the public IP and access URL
 PUBLIC_IP=$(curl -s ifconfig.me)
