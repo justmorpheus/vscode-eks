@@ -55,7 +55,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Step 3: Destroy Terraform-managed infrastructure
-terraform -chdir=terraform/ destroy -auto-approve -lock=false
+terraform -chdir=terraform/ destroy -var="region=$AWS_REGION" -auto-approve -lock=false
 if [ $? -ne 0 ]; then
   echo "Terraform destroy failed"
   cleanup

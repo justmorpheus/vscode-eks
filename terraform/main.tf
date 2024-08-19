@@ -161,11 +161,11 @@ resource "aws_instance" "web" {
 
   provisioner "local-exec" {
     command = <<EOT
-      instance_status=$(aws ec2 describe-instance-status --instance-id ${self.id} --query "InstanceStatuses[0].InstanceStatus.Status" --output text)
+      instance_status=$(aws ec2 describe-instance-status --instance-id ${self.id} --query "InstanceStatuses[0].InstanceStatus.Status" --region ${var.region} --output text)
       while [ "$instance_status" != "ok" ]; do
         echo "Waiting for instance to be in 'ok' status..."
         sleep 10
-        instance_status=$(aws ec2 describe-instance-status --instance-id ${self.id} --query "InstanceStatuses[0].InstanceStatus.Status" --output text)
+        instance_status=$(aws ec2 describe-instance-status --instance-id ${self.id} --query "InstanceStatuses[0].InstanceStatus.Status" --region ${var.region} --output text)
       done
       echo "Instance is ready!"
     EOT
@@ -202,4 +202,9 @@ output "instance_public_ip" {
 output "instance_public_dns" {
   description = "The public DNS name of the EC2 instance"
   value       = aws_instance.web.public_dns
+}
+
+output "region" {
+  description = "The AWS region in which resources are deployed"
+  value       = var.region
 }
