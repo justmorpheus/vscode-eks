@@ -72,7 +72,7 @@ These tools will be installed automatically by the `deploy.sh` script if they ar
 
 ## Deployment
 
-Run the `deploy.sh` script to deploy the infrastructure.
+- Run the `deploy.sh` script to deploy the infrastructure.
 
 ```bash
 bash deploy.sh --region <your-region>
@@ -81,6 +81,8 @@ bash deploy.sh --region <your-region>
 Replace `<your-region>` with your desired AWS region. If no region is provided, the script will default to `us-east-1`.
 
 > Note: Currently supported regions are 'us-east-1' and 'us-west-2'.
+
+- Open the IP address in the browser to access the vscode and enter the password shown in the output.
 
 
 ## TL;DR
