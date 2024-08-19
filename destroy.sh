@@ -21,6 +21,24 @@ if [[ ! "$(basename $PWD)" == "vscode-eks" ]]; then
     exit 1
 fi
 
+# Check if terraform_output.json exists
+if [[ ! -f terraform_output.json ]]; then
+    echo "Error: terraform_output.json not found. Ensure the infrastructure was deployed and the file exists."
+    exit 1
+fi
+
+# Extract the region from terraform_output.json to check against AWS_REGION
+DEPLOYED_REGION=$(jq -r '.region.value // empty' terraform_output.json)
+if [[ -z "$DEPLOYED_REGION" ]]; then
+    echo "Warning: Region information not found in terraform_output.json. Proceeding without region check."
+else
+    if [[ "$DEPLOYED_REGION" != "$AWS_REGION" ]]; then
+        echo "Error: Mismatch between specified region ($AWS_REGION) and deployed region ($DEPLOYED_REGION)."
+        echo "Please run the script with the correct region."
+        exit 1
+    fi
+fi
+
 # Default region setting
 echo "Using AWS region: $AWS_REGION"
 
@@ -32,6 +50,7 @@ export AWS_REGION="${AWS_REGION}"
 terraform -chdir=terraform/ init -lock=false
 if [ $? -ne 0 ]; then
   echo "Terraform initialization failed"
+  cleanup
   exit 1
 fi
 
@@ -39,22 +58,28 @@ fi
 terraform -chdir=terraform/ destroy -auto-approve -lock=false
 if [ $? -ne 0 ]; then
   echo "Terraform destroy failed"
+  cleanup
   exit 1
 fi
 
-# Step 4: Remove .terraform directory and .terraform.lock.hcl file
-rm -rf terraform/.terraform \
-       terraform/.terraform.lock.hcl \
-       terraform/terraform.tfstate \
-       terraform/vscode_password.txt \
-       terraform/terraform.tfstate.backup \
-       terraform_output.json
-       
+# Step 4: Cleanup
+cleanup() {
+    # Remove .terraform directory and related files
+    rm -rf terraform/.terraform \
+           terraform/.terraform.lock.hcl \
+           terraform/terraform.tfstate \
+           terraform/vscode_password.txt \
+           terraform/terraform.tfstate.backup \
+           terraform_output.json
+           
+    # Revert the placeholder password in file.sh
+    sed -i "s|PASSWORD=.*|PASSWORD=ReplaceWithYourStrongPassword\" \\\\|" terraform/file.sh
 
-# Revert the placeholder password in file.sh
-sed -i "s|PASSWORD=.*|PASSWORD=ReplaceWithYourStrongPassword\" \\\\|" terraform/file.sh
+    echo "Cleanup completed."
+}
 
-
+# Always perform cleanup
+cleanup
 
 # Show final message
 echo "Infrastructure destroyed successfully"
