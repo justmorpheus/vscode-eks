@@ -56,9 +56,15 @@ These tools will be installed automatically by the `deploy.sh` script if they ar
     cd vscode-eks
     ```
 
-2. **Configure AWS CLI**
+2. **Pre-Deployment**
 
-    Ensure that your AWS CLI is configured with the necessary credentials.
+   > Run the pre-deploy.sh script to ensure all necessary dependencies (AWS CLI, Terraform, etc.) are installed.
+   ```bash
+    bash pre-deploy.sh
+    ```
+3. **Configure AWS CLI**
+
+    > Ensure that your AWS CLI is configured with the necessary credentials.
 
     ```bash
     aws configure
@@ -66,13 +72,18 @@ These tools will be installed automatically by the `deploy.sh` script if they ar
 
 ## Deployment
 
-Run the `deploy.sh` script to deploy the infrastructure.
+- Run the `deploy.sh` script to deploy the infrastructure.
 
 ```bash
-./deploy.sh --region <your-region>
+bash deploy.sh --region <your-region>
 ```
 
 Replace `<your-region>` with your desired AWS region. If no region is provided, the script will default to `us-east-1`.
+
+> Note: Currently supported regions are 'us-east-1' and 'us-west-2'.
+
+- Open the IP address in the browser to access the vscode and enter the password shown in the output.
+
 
 ## TL;DR
 
@@ -87,6 +98,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Credits
 - Thanks to [coder team](https://github.com/coder/deploy-code-server)
+- Thanks to [AWS eks-workshop-v2](https://github.com/aws-samples/eks-workshop-v2/blob/main/lab/scripts/installer.sh)
 
 
 This project is maintained by the Kubernetes Village team. Contributions are welcome!
