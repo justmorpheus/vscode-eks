@@ -142,6 +142,15 @@ sudo docker run -ditp 80:8080 \
   -e "PASSWORD=ReplaceWithYourStrongPassword" \
   bencdr/code-server-deploy-container:latest
 
+# Install cargo and mdbook
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+# Automatically source the Rust environment for the current session
+. "$HOME/.cargo/env"
+# For bash/zsh:
+echo 'source $HOME/.cargo/env' >> ~/.bashrc
+# install mdbook
+cargo install mdbook
+
 # sudo docker run -ditp 80:8080 \
 #   -v "/home/coder/project:/home/coder/project" \
 #   -u "$(id -u coder):$(id -g coder)" \
