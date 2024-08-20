@@ -66,6 +66,7 @@ These tools will be installed automatically by the `deploy.sh` script if they ar
 3. **Configure AWS CLI**
 
     > Ensure that your AWS CLI is configured with the necessary credentials.
+    
     > If using AWS shell then it should be automatically configured with user's permission.
 
     ```bash
