@@ -136,7 +136,7 @@ sudo mkdir -p /home/coder/project
 
 # This password is temporary and is regenerated every time the script runs.
 # Warning: Do not push this code while vscode server is running. 
-#Disclaimer:
+# Disclaimer: The author or the employer is not responsible for any charges or security issues that may arise. This is shared under the MIT 0 license.
 # Run the code-server container in the background
 sudo docker run -ditp 80:8080 \
   -v "/home/coder/project:/home/coder/project" \
