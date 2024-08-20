@@ -1,7 +1,7 @@
 
 # VSCode Code-server Deployment for Kubernetes Lab
 
-This repository contains scripts to deploy VSCode server using Terraform in EC2.
+This repository contains scripts to deploy VSCode server using Terraform in EC2. This repo is designed to run on codespace as well as AWS Shell.
 
 > As cloud9 is deprecated, for labs and learning this script has been created.
 
