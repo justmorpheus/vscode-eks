@@ -7,35 +7,28 @@ echo "Usage: ./deploy.sh [--region <region>]"
 echo ""
 echo "If no region is selected, the script will default to 'us-east-1'."
 echo "Supported regions are 'us-east-1' and 'us-west-2'."
-# echo ""
-# echo "To run the script:"
-# echo "1. Clone the 'vscode-eks' repository if you haven't already:"
-# echo "   git clone https://github.com/kubernetesvillage/vscode-eks"
-# echo "2. Navigate into the 'vscode-eks' directory:"
-# echo "   cd vscode-eks"
-# echo "3. Make the script executable:"
-# echo "   chmod +x deploy.sh"
-# echo "4. Run the script with or without specifying a region:"
-# echo "   ./deploy.sh --region us-west-2"
-# echo "   or simply:"
-# echo "   ./deploy.sh"
-# echo ""
 echo "Note: AWS CLI should be configured before running this script."
 echo "====================================================================="
 echo ""
 
 echo "Vscode deployment in progress.."
-echo "If no region is selected, the script will default to us-east-1."
-echo ""
-echo "Note: Only the regions us-east-1 and us-west-2 are supported."
-echo ""
 echo ""
 
-# Prompt the user to confirm if they want to continue
-read -p "Do you want to continue with the deployment? (Y/N): " confirm
+# Display the disclaimer and prompt the user to accept it
+echo "====================================================================="
+echo "Disclaimer: The views expressed are solely those of the speaker and do not reflect the opinions of the employer. Use at your own risk."
+echo "Note: The password is temporary and regenerates each time the script runs."
+echo "Warning: Do not push this code while the VS Code server is running."
+echo "Liability: The author is not responsible for any charges or security issues that may arise. This is shared under the MIT 0 license. "
+echo "====================================================================="
+echo ""
+
+
+# Prompt the user to confirm if they want to accept the disclaimer and continue
+read -p "Do you accept the disclaimer and want to continue with the deployment? (Y/N): " confirm
 case $confirm in
     [Yy]* ) 
-        echo "Continuing with the deployment...";;
+        echo "Disclaimer accepted. Continuing with the deployment...";;
     [Nn]* ) 
         echo "Deployment aborted."
         exit 0;;
@@ -43,6 +36,7 @@ case $confirm in
         echo "Invalid input. Please enter Y or N."
         exit 1;;
 esac
+
 
 # Check if AWS CLI is configured
 if ! aws sts get-caller-identity &> /dev/null; then

@@ -134,6 +134,9 @@ sudo usermod -aG wheel coder
 # Set up code-server using Docker
 sudo mkdir -p /home/coder/project
 
+# This password is temporary and is regenerated every time the script runs.
+# Warning: Do not push this code while vscode server is running. 
+#Disclaimer:
 # Run the code-server container in the background
 sudo docker run -ditp 80:8080 \
   -v "/home/coder/project:/home/coder/project" \
