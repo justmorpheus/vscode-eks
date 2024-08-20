@@ -96,6 +96,12 @@ Replace `<your-region>` with your desired AWS region. If no region is provided, 
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
+## Disclaimer
+- The views expressed are solely those of the speaker and do not reflect the opinions of the employer. Use at your own risk.
+- The password is temporary and regenerates each time the script runs.
+- Do not push this code while the VS Code server is running.
+- The author is not responsible for any charges or security issues that may arise. This is shared under the MIT 0 license. 
+
 ## Credits
 - Thanks to [coder team](https://github.com/coder/deploy-code-server)
 - Thanks to [AWS eks-workshop-v2](https://github.com/aws-samples/eks-workshop-v2/blob/main/lab/scripts/installer.sh)
