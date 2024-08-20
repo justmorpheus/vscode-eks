@@ -12,6 +12,7 @@ This repository contains scripts to deploy VSCode server using Terraform in EC2.
 - [Deployment](#deployment)
 - [TL;DR](#tldr)
 - [License](#license)
+- [Disclaimer](#disclaimer)
 - [Credits](#credits)
 
 ## Prerequisites
